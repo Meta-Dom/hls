@@ -1,12 +1,13 @@
 @xcore.lang.Ecore(nsURI="http://hls.metadom.hu/ssaModel")
 @Import(ecore="http://www.eclipse.org/emf/2002/Ecore")
 @xcore.lang.GenModel(modelDirectory="/hu.metadom.hls.ssamodel/src-gen", 
-	editDirectory="/hu.metadom.hls.ssamodel.edit/src",
-	editorDirectory="/hu.metadom.hls.ssamodel.editor/src", modelName="SsaModel",
+	//editDirectory="/hu.metadom.hls.ssamodel.edit/src",
+	//editorDirectory="/hu.metadom.hls.ssamodel.editor/src", 
+	modelName="SsaModel",
 	editPluginClass="hu.metadom.hls.ssamodel.provider.SsaModelEditPlugin",
 	editorPluginClass="hu.metadom.hls.ssamodel.presentation.SsaModelEditorPlugin", 
 	codeFormatting="true",
-	testsDirectory="/hu.metadom.hls.ssamodel.tests/src",
+	//testsDirectory="/hu.metadom.hls.ssamodel.tests/src",
 	testSuiteClass="hu.metadom.hls.ssamodel.tests.SsaModelAllTests", 
 	importerID="org.eclipse.emf.importer.ecore",
 	containmentProxies="false", 
