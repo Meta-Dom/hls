@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryAddSubtractInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryAddSubtractInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryAddSubtractInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryBitInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryBitInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryBitInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryCompareInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryCompareInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryCompareInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryLogicalInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryLogicalInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryLogicalInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryMultiplyDivideModuloInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryMultiplyDivideModuloInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryMultiplyDivideModuloInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.binaryShiftInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BinaryShiftInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.binaryShiftInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.breakContinueReturnIsNotLast" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.BreakContinueReturnIsNotLastConstraint0" name="hu.metadom.hls.ssamodel.query.breakContinueReturnIsNotLast">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.differentBaseTypesForNode" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.DifferentBaseTypesForNodeConstraint0" name="hu.metadom.hls.ssamodel.query.differentBaseTypesForNode">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.differentEssentialTypesForNode" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.DifferentEssentialTypesForNodeConstraint0" name="hu.metadom.hls.ssamodel.query.differentEssentialTypesForNode">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.differentTypesForNode" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.DifferentTypesForNodeConstraint0" name="hu.metadom.hls.ssamodel.query.differentTypesForNode">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.gotoPresent" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.GotoPresentConstraint0" name="hu.metadom.hls.ssamodel.query.gotoPresent">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.nodeRefInOtherFunction" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.NodeRefInOtherFunctionConstraint0" name="hu.metadom.hls.ssamodel.query.nodeRefInOtherFunction">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.switchFallThrough" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.SwitchFallThroughConstraint0" name="hu.metadom.hls.ssamodel.query.switchFallThrough">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.unaryComplementInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.UnaryComplementInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.unaryComplementInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.unaryNegationInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.UnaryNegationInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.unaryNegationInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.unaryNegativeInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.UnaryNegativeInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.unaryNegativeInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.unaryPositiveInappropriateTypes" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.UnaryPositiveInappropriateTypesConstraint0" name="hu.metadom.hls.ssamodel.query.unaryPositiveInappropriateTypes">
+      <enabledForEditor editorId="*"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.undefIsUsed" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.UndefIsUsedConstraint0" name="hu.metadom.hls.ssamodel.query.undefIsUsed">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.valueNotUsed" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.ValueNotUsedConstraint0" name="hu.metadom.hls.ssamodel.query.valueNotUsed">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.varInitNodeType" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.VarInitNodeTypeConstraint0" name="hu.metadom.hls.ssamodel.query.varInitNodeType">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+  <extension id="validation.constraint.hu.metadom.hls.ssamodel.query.wrongReturn" point="org.eclipse.viatra.addon.validation.runtime.constraint">
+    <constraint class="hu.metadom.hls.ssamodel.query.WrongReturnConstraint0" name="hu.metadom.hls.ssamodel.query.wrongReturn">
+      <enabledForEditor editorId="hu.metadom.hls.ssamodel.presentation.PromodEditorID"/>
+    </constraint>
+  </extension>
+</plugin>

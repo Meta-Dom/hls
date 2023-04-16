@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hu.metadom.hls.ssamodel.query.validation
+Bundle-SymbolicName: hu.metadom.hls.ssamodel.query.validation;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Require-Bundle: hu.metadom.hls.ssamodel.query,
+ org.eclipse.viatra.query.runtime,
+ org.eclipse.viatra.addon.validation.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
