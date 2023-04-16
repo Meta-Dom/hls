@@ -1,5 +1,5 @@
 @Ecore(nsURI="http://hls.metadom.hu/ssaModelTrace")
-@GenModel(modelDirectory="/hu.metadom.hls.ssamodeltrace/src", 
+@GenModel(modelDirectory="/hu.metadom.hls.ssamodeltrace/src-gen", 
 	//editDirectory="/hu.metadom.hls.ssamodeltrace.edit/src",
 	//editorDirectory="/hu.metadom.hls.ssamodeltrace.editor/src", 
 	modelName="SsaModelTrace",
