@@ -71,6 +71,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FunctionToLocalizeVariables createFunctionToLocalizeVariables() {
 		FunctionToLocalizeVariablesImpl functionToLocalizeVariables = new FunctionToLocalizeVariablesImpl();
 		return functionToLocalizeVariables;
@@ -81,6 +82,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Trace createTrace() {
 		TraceImpl trace = new TraceImpl();
 		return trace;
@@ -91,6 +93,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FunctionCall createFunctionCall() {
 		FunctionCallImpl functionCall = new FunctionCallImpl();
 		return functionCall;
@@ -101,6 +104,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FunctionToDepointerParams createFunctionToDepointerParams() {
 		FunctionToDepointerParamsImpl functionToDepointerParams = new FunctionToDepointerParamsImpl();
 		return functionToDepointerParams;
@@ -111,6 +115,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public PointerParameter createPointerParameter() {
 		PointerParameterImpl pointerParameter = new PointerParameterImpl();
 		return pointerParameter;
@@ -121,6 +126,7 @@ public class SsaModelTraceFactoryImpl extends EFactoryImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaModelTracePackage getSsaModelTracePackage() {
 		return (SsaModelTracePackage)getEPackage();
 	}

@@ -96,6 +96,7 @@ public class FunctionToLocalizeVariablesImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaFunction getFunction() {
 		if (function != null && function.eIsProxy()) {
 			InternalEObject oldFunction = (InternalEObject)function;
@@ -122,6 +123,7 @@ public class FunctionToLocalizeVariablesImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFunction(SsaFunction newFunction) {
 		SsaFunction oldFunction = function;
 		function = newFunction;
@@ -134,6 +136,7 @@ public class FunctionToLocalizeVariablesImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SsaVar> getVars() {
 		if (vars == null) {
 			vars = new EObjectResolvingEList<SsaVar>(SsaVar.class, this, SsaModelTracePackage.FUNCTION_TO_LOCALIZE_VARIABLES__VARS);
@@ -146,6 +149,7 @@ public class FunctionToLocalizeVariablesImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<FunctionCall> getFuncCalls() {
 		if (funcCalls == null) {
 			funcCalls = new EObjectContainmentEList<FunctionCall>(FunctionCall.class, this, SsaModelTracePackage.FUNCTION_TO_LOCALIZE_VARIABLES__FUNC_CALLS);

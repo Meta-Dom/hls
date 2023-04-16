@@ -83,6 +83,7 @@ public class FunctionToDepointerParamsImpl extends MinimalEObjectImpl.Container 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaFunction getFunction() {
 		if (function != null && function.eIsProxy()) {
 			InternalEObject oldFunction = (InternalEObject)function;
@@ -109,6 +110,7 @@ public class FunctionToDepointerParamsImpl extends MinimalEObjectImpl.Container 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFunction(SsaFunction newFunction) {
 		SsaFunction oldFunction = function;
 		function = newFunction;
@@ -121,6 +123,7 @@ public class FunctionToDepointerParamsImpl extends MinimalEObjectImpl.Container 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<PointerParameter> getPointerParameter() {
 		if (pointerParameter == null) {
 			pointerParameter = new EObjectContainmentEList<PointerParameter>(PointerParameter.class, this, SsaModelTracePackage.FUNCTION_TO_DEPOINTER_PARAMS__POINTER_PARAMETER);

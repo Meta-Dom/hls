@@ -135,6 +135,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaParam getPointerParam() {
 		if (pointerParam != null && pointerParam.eIsProxy()) {
 			InternalEObject oldPointerParam = (InternalEObject)pointerParam;
@@ -161,6 +162,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setPointerParam(SsaParam newPointerParam) {
 		SsaParam oldPointerParam = pointerParam;
 		pointerParam = newPointerParam;
@@ -173,6 +175,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SsaIndirectRead> getIndirectReadList() {
 		if (indirectReadList == null) {
 			indirectReadList = new EObjectResolvingEList<SsaIndirectRead>(SsaIndirectRead.class, this, SsaModelTracePackage.POINTER_PARAMETER__INDIRECT_READ_LIST);
@@ -185,6 +188,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<SsaIndirectWrite> getIndirectWriteList() {
 		if (indirectWriteList == null) {
 			indirectWriteList = new EObjectResolvingEList<SsaIndirectWrite>(SsaIndirectWrite.class, this, SsaModelTracePackage.POINTER_PARAMETER__INDIRECT_WRITE_LIST);
@@ -197,6 +201,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isIsInput() {
 		return isInput;
 	}
@@ -206,6 +211,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIsInput(boolean newIsInput) {
 		boolean oldIsInput = isInput;
 		isInput = newIsInput;
@@ -218,6 +224,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isIsOutput() {
 		return isOutput;
 	}
@@ -227,6 +234,7 @@ public class PointerParameterImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIsOutput(boolean newIsOutput) {
 		boolean oldIsOutput = isOutput;
 		isOutput = newIsOutput;

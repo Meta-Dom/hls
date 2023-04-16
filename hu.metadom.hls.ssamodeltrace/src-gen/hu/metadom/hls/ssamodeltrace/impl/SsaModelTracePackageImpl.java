@@ -131,6 +131,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFunctionToLocalizeVariables() {
 		return functionToLocalizeVariablesEClass;
 	}
@@ -140,6 +141,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionToLocalizeVariables_Function() {
 		return (EReference)functionToLocalizeVariablesEClass.getEStructuralFeatures().get(0);
 	}
@@ -149,6 +151,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionToLocalizeVariables_Vars() {
 		return (EReference)functionToLocalizeVariablesEClass.getEStructuralFeatures().get(1);
 	}
@@ -158,6 +161,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionToLocalizeVariables_FuncCalls() {
 		return (EReference)functionToLocalizeVariablesEClass.getEStructuralFeatures().get(2);
 	}
@@ -167,6 +171,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTrace() {
 		return traceEClass;
 	}
@@ -176,6 +181,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_Functions() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(0);
 	}
@@ -185,6 +191,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_Container() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(1);
 	}
@@ -194,6 +201,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTrace_Pointers() {
 		return (EReference)traceEClass.getEStructuralFeatures().get(2);
 	}
@@ -203,6 +211,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFunctionCall() {
 		return functionCallEClass;
 	}
@@ -212,6 +221,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionCall_SsaCall() {
 		return (EReference)functionCallEClass.getEStructuralFeatures().get(0);
 	}
@@ -221,6 +231,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionCall_FunctionTrace() {
 		return (EReference)functionCallEClass.getEStructuralFeatures().get(1);
 	}
@@ -230,6 +241,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getFunctionToDepointerParams() {
 		return functionToDepointerParamsEClass;
 	}
@@ -239,6 +251,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionToDepointerParams_Function() {
 		return (EReference)functionToDepointerParamsEClass.getEStructuralFeatures().get(0);
 	}
@@ -248,6 +261,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getFunctionToDepointerParams_PointerParameter() {
 		return (EReference)functionToDepointerParamsEClass.getEStructuralFeatures().get(1);
 	}
@@ -257,6 +271,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getPointerParameter() {
 		return pointerParameterEClass;
 	}
@@ -266,6 +281,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPointerParameter_PointerParam() {
 		return (EReference)pointerParameterEClass.getEStructuralFeatures().get(0);
 	}
@@ -275,6 +291,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPointerParameter_IndirectReadList() {
 		return (EReference)pointerParameterEClass.getEStructuralFeatures().get(1);
 	}
@@ -284,6 +301,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getPointerParameter_IndirectWriteList() {
 		return (EReference)pointerParameterEClass.getEStructuralFeatures().get(2);
 	}
@@ -293,6 +311,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPointerParameter_IsInput() {
 		return (EAttribute)pointerParameterEClass.getEStructuralFeatures().get(3);
 	}
@@ -302,6 +321,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPointerParameter_IsOutput() {
 		return (EAttribute)pointerParameterEClass.getEStructuralFeatures().get(4);
 	}
@@ -311,6 +331,7 @@ public class SsaModelTracePackageImpl extends EPackageImpl implements SsaModelTr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaModelTraceFactory getSsaModelTraceFactory() {
 		return (SsaModelTraceFactory)getEFactoryInstance();
 	}

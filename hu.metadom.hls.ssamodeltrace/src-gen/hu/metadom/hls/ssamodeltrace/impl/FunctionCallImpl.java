@@ -75,6 +75,7 @@ public class FunctionCallImpl extends MinimalEObjectImpl.Container implements Fu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SsaCall getSsaCall() {
 		if (ssaCall != null && ssaCall.eIsProxy()) {
 			InternalEObject oldSsaCall = (InternalEObject)ssaCall;
@@ -101,6 +102,7 @@ public class FunctionCallImpl extends MinimalEObjectImpl.Container implements Fu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setSsaCall(SsaCall newSsaCall) {
 		SsaCall oldSsaCall = ssaCall;
 		ssaCall = newSsaCall;
@@ -113,6 +115,7 @@ public class FunctionCallImpl extends MinimalEObjectImpl.Container implements Fu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public FunctionToLocalizeVariables getFunctionTrace() {
 		if (functionTrace != null && functionTrace.eIsProxy()) {
 			InternalEObject oldFunctionTrace = (InternalEObject)functionTrace;
@@ -139,6 +142,7 @@ public class FunctionCallImpl extends MinimalEObjectImpl.Container implements Fu
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setFunctionTrace(FunctionToLocalizeVariables newFunctionTrace) {
 		FunctionToLocalizeVariables oldFunctionTrace = functionTrace;
 		functionTrace = newFunctionTrace;

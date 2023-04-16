@@ -93,6 +93,7 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<FunctionToLocalizeVariables> getFunctions() {
 		if (functions == null) {
 			functions = new EObjectContainmentEList<FunctionToLocalizeVariables>(FunctionToLocalizeVariables.class, this, SsaModelTracePackage.TRACE__FUNCTIONS);
@@ -105,6 +106,7 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public hu.metadom.hls.ssamodel.Container getContainer() {
 		if (container != null && container.eIsProxy()) {
 			InternalEObject oldContainer = (InternalEObject)container;
@@ -131,6 +133,7 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setContainer(hu.metadom.hls.ssamodel.Container newContainer) {
 		hu.metadom.hls.ssamodel.Container oldContainer = container;
 		container = newContainer;
@@ -143,6 +146,7 @@ public class TraceImpl extends MinimalEObjectImpl.Container implements Trace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<FunctionToDepointerParams> getPointers() {
 		if (pointers == null) {
 			pointers = new EObjectContainmentEList<FunctionToDepointerParams>(FunctionToDepointerParams.class, this, SsaModelTracePackage.TRACE__POINTERS);
