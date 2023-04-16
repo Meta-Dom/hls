@@ -1,0 +1,33 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+pattern findReturnOrControlInBlock(block: SsaBlock, node: SsaNode)
+{
+	SsaReturn(node);
+	SsaBlock.nodes(block, node);
+} or {
+	SsaControl(node);
+	SsaBlock.nodes(block, node);
+}
+
+pattern returnInFunction(function: SsaFunction, ret: SsaReturn){
+	SsaBlock.nodes(b, ret);
+	find blockInBlockWithDoWhile+(function, b);
+}
+
+pattern findBreakWithFunctionLoopBlock(parentOfDowhile: SsaBlock, dowhile: SsaDowhile, closestSwitchToControl: SsaSwitch, parentOfControl: SsaBlock, control: SsaControl){
+	SsaBlock.nodes(parentOfControl, control);
+	SsaControl.controlType(control, ::BREAK);
+	find reachableFromDowhile(dowhile, control);
+	SsaBlock.nodes(parentOfDowhile, dowhile);
+	find switchInnerBlock(closestSwitchToControl, parentOfControl);
+}
+
+pattern findContinueWithFunctionLoopBlock(parentOfDowhile: SsaBlock, dowhile: SsaDowhile, closestSwitchToControl: SsaSwitch, parentOfControl: SsaBlock, control: SsaControl){
+	SsaBlock.nodes(parentOfControl, control);
+	SsaControl.controlType(control, ::CONTINUE);
+	find reachableFromDowhile(dowhile, control);
+	SsaBlock.nodes(parentOfDowhile, dowhile);
+	find switchInnerBlock(closestSwitchToControl, parentOfControl);
+}

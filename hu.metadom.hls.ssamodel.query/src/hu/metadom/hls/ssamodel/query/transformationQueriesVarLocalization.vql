@@ -1,0 +1,122 @@
+package hu.metadom.hls.ssamodel.query
+
+
+import "http://hls.metadom.hu/ssaModel"
+import "http://hls.metadom.hu/ssaModelTrace"
+
+private pattern varIsWritten(writtenVar: SsaVar) {
+	SsaNode.^var(node, writtenVar);
+	SsaVar.initNode(writtenVar, initNode);
+	node != initNode;
+}
+
+private pattern readOrWriteByNode(node: SsaNode, usedVar: SsaVar) {
+	SsaNode.^var(node, usedVar);
+} or {
+	find nodeUseNode(node, usedNode);
+	SsaNode.^var(usedNode, usedVar);
+}
+
+private pattern functionWithGlobalVar(func: SsaFunction, variable: SsaVar) {
+	Container.globalBlock.nameScope.names.value(container, variable);
+	
+	Container.functions(container, func);
+	find functionNode(func, node);
+	find readOrWriteByNode(node, variable);
+}
+
+private pattern functionWithAllGlobalVar(func: SsaFunction, variable: SsaVar) {
+	find functionWithGlobalVar(func, variable);
+} or {
+	find functionCallPair+(func, otherFunc);
+	find functionWithGlobalVar(otherFunc, variable);
+}
+
+
+// VarLocalization lekérdezések
+
+private pattern functionWithTrace(funcTrace: FunctionToLocalizeVariables, func: SsaFunction) {
+	Trace.functions(_, funcTrace);
+	FunctionToLocalizeVariables.function(funcTrace, func);
+}
+
+pattern functionTraceToCreate(func: SsaFunction) {
+	find functionWithAllGlobalVar(func, _);
+}
+
+pattern functionTraceItemToCreate(funcTrace: FunctionToLocalizeVariables, func: SsaFunction, variable: SsaVar) {
+	find functionWithAllGlobalVar(func, variable);
+	find functionWithTrace(funcTrace, func);
+}
+
+pattern functionCalls(funcTrace: FunctionToLocalizeVariables, funcCall: SsaCall, otherFuncTrace: FunctionToLocalizeVariables) {
+	find functionWithTrace(funcTrace, func);
+	find functionCallInFunction(func, funcCall, _);
+	
+	SsaCall.function(funcCall, otherFunc);
+	FunctionToLocalizeVariables.function(otherFuncTrace, otherFunc);
+}
+
+pattern functionToLocalizeVariables(trace: FunctionToLocalizeVariables) {
+	FunctionToLocalizeVariables(trace);
+}
+
+// PushDown queries
+
+private pattern varStrictInitNode(variable: SsaVar, init: SsaAbstractInit) {
+	SsaVar.initNode(variable, init);
+}
+
+private pattern callArgumentNode(call: SsaCall, arg: SsaArgument, node: SsaNode) {
+	SsaCall.arguments(call, arg);
+	SsaArgument.node(arg, node);
+}
+
+private pattern ssaCallOutputArgument(call: SsaCall, outputArgument: SsaOutputArgument) {
+	SsaCall.arguments(call, arg);
+	SsaPassByRefArgument.outNode(arg, outputArgument);
+}
+
+private pattern variableCanNotPushDown(node: SsaNode, variable: SsaVar, initNode: SsaAbstractInit, callNode: SsaCall) {
+	SsaNode.^var(node, variable);
+	
+	node != initNode;
+	
+	neg find ssaCallOutputArgument(callNode, node);
+	
+	// redundant queries for support
+	find varStrictInitNode(variable, initNode);
+	find nodeUseNode(callNode, initNode);
+}
+
+private pattern dowhileBlock(dowhile: SsaDowhile, block: SsaBlock) {
+	SsaDowhile.body(dowhile, block);
+} or {
+	SsaDowhile.cond(dowhile, block);
+} or {
+	SsaDowhile.merge(dowhile, block);
+}
+
+private pattern underDowhile(dowhile: SsaDowhile, node: SsaNode) {
+	find dowhileBlock(dowhile, body);
+	find reachableBlock(body, anyblock);
+	SsaBlock.nodes(anyblock, node);
+}
+
+pattern pushDownCondition(targetFunction: SsaFunction, variable: SsaVar, arg: SsaArgument) {
+	
+	1 == count find ssaCallFunction(_, targetFunction);
+	find ssaCallFunction(targetCall, targetFunction);
+	
+	find varStrictInitNode(variable, initNode);
+	
+	1 == count find nodeUseNode(_, initNode);
+	find nodeUseNode(targetCall, initNode);
+	
+	1 == count find callArgumentNode(targetCall, _, initNode);
+	find callArgumentNode(targetCall, arg, initNode);
+	
+	neg find variableCanNotPushDown(_, variable, initNode, targetCall);
+	
+	neg find underDowhile(_, targetCall);
+}

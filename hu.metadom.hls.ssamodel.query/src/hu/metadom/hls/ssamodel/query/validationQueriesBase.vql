@@ -1,0 +1,70 @@
+
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "wrong return",
+	key = {ret})
+pattern wrongReturn(ret: SsaReturn) {
+	SsaReturn(ret);
+	neg find functionReturn(ret);
+}
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "not defined value is used in $ssaInit$",
+	key = {ssaInit, usingNode})
+pattern undefIsUsed(ssaInit: SsaInit, usingNode: SsaNode) {
+	neg find ssaInitValue(ssaInit, _);
+	find nodeUseNode(usingNode, ssaInit);
+}
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "value is not used",
+	key = {ssaNode})
+pattern valueNotUsed(ssaNode: SsaNode) {
+	neg find nodeUseNode(_, ssaNode);
+	find produceNode(ssaNode);
+}
+
+
+// user
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "goto exists in the code",
+	key = {goto})
+pattern gotoPresent(goto: SsaGoto) {
+	SsaGoto(goto);
+}
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "switch fall through",
+	key = {sw,block})
+pattern switchFallThrough(sw: SsaSwitch, block: SsaBlock) {
+	SsaSwitch.switchType(sw, ::SWITCH);
+	SsaSwitch.cases.node(sw, block);
+}
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "break/continue/return is not the last item of the block",
+	key = {block, node})
+pattern breakContinueReturnIsNotLast(block: SsaBlock, node: SsaNode) {
+	SsaBlock.nodes(block, node);
+	SsaControl(node);
+} or {
+	SsaBlock.nodes(block, node);
+	SsaReturn(node);
+}
+
+

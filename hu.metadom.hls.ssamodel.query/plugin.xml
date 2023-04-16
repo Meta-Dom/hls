@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension id="hu.metadom.hls.ssamodel.query.HelperQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.HelperQueries" id="hu.metadom.hls.ssamodel.query.HelperQueries">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.reachableFromDowhile"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.blockInBlockWithDoWhile"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.blockInBlockOnlySwitch"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.reachableNodesNoDowhile"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.reachableNodesNoDowhile2"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.switchInnerBlock"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.SsaUtil" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.SsaUtil" id="hu.metadom.hls.ssamodel.query.SsaUtil">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.blockInBlock"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.reachableBlock"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.nodeOrInnerNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionCallInFunction"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionCallPair"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.innerInitList"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.allInitList"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.nodeUseNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.nodeUseNodeIndirectly"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.produceNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.controlNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.originName"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.simplePointerLeft"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.simplePointerRight"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayPointerLeft"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayPointerRight"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.varNodeUseNonameNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionReturn"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TransformationQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TransformationQueries" id="hu.metadom.hls.ssamodel.query.TransformationQueries">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unusedNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.typeNameWithSpace"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.redundantAddressOperator"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayWriteCascade"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayReadCascade"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unnamedIndirectOrArrayWrite"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.assignToNonameAndUsage"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unusedPostIncDecAssign"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.originPostIncDecNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.multipleConsumerNonameNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionWithPassByRefParam"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.callWithPassByRefArgument"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.loopPhi"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.cSsaSwitch"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TransformationQueriesArgumentSimplifier" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TransformationQueriesArgumentSimplifier" id="hu.metadom.hls.ssamodel.query.TransformationQueriesArgumentSimplifier">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.argumentPair"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.usedByUnaryAddress"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.readonlyParameters"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.usedOutputParameter"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.notUsedOutputParameter"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.writeonlyParameters"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.noneDirectionArguments"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.noneDirectionParameters"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.argumentOfUnusedParam"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unusedVar"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unusedParam"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unusedPhi"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TransformationQueriesHandleControls" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TransformationQueriesHandleControls" id="hu.metadom.hls.ssamodel.query.TransformationQueriesHandleControls">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.findReturnOrControlInBlock"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.returnInFunction"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.findBreakWithFunctionLoopBlock"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.findContinueWithFunctionLoopBlock"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TransformationQueriesPointerEliminate" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TransformationQueriesPointerEliminate" id="hu.metadom.hls.ssamodel.query.TransformationQueriesPointerEliminate">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.pointerTraceToCreate"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.pointerTraceItemToCreate"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionToDepointerParams"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.assignToNoname"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.assignFromNoname"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayPointerParamR"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.arrayPointerParamWR"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.simplePointerParam"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TransformationQueriesVarLocalization" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TransformationQueriesVarLocalization" id="hu.metadom.hls.ssamodel.query.TransformationQueriesVarLocalization">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionTraceToCreate"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionTraceItemToCreate"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionCalls"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.functionToLocalizeVariables"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.pushDownCondition"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.TypeUtilQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.TypeUtilQueries" id="hu.metadom.hls.ssamodel.query.TypeUtilQueries">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaFunction"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaCall"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaAssign"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaIndirectRead"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaIndirectWrite"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.filePosition"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaInitValue"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaNodeVar"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaCallFunction"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaArgumentNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaArgumentParam"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaPassByRefArgumentParam"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.ValidationHelperQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.ValidationHelperQueries" id="hu.metadom.hls.ssamodel.query.ValidationHelperQueries">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypeCategories"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesWideness"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesVoidBool"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesVoidBoolChar"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesVoidBoolCharSigned"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesVoidBoolCharUnsigned"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.essentialTypesVoidCharSignedUnsignedFloat"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryOperand"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryAddSubtract"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryMultiplyDivideModulo"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryCompare"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryLogical"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryShift"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.bothPrimitive"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.accessibleByRef"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.refOfType"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.typesForNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryArithmetic"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.typesForArithmeticNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.typesForCompositeExpressions"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.ssaReferenceNotPointerOrArray"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.ValidationQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.ValidationQueries" id="hu.metadom.hls.ssamodel.query.ValidationQueries">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.differentBaseTypesForNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.differentTypesForNode"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.differentEssentialTypesForNode"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.ValidationQueriesBase" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.ValidationQueriesBase" id="hu.metadom.hls.ssamodel.query.ValidationQueriesBase">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.wrongReturn"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.undefIsUsed"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.valueNotUsed"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.gotoPresent"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.switchFallThrough"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.breakContinueReturnIsNotLast"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.ValidationQueriesIntegrity" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.ValidationQueriesIntegrity" id="hu.metadom.hls.ssamodel.query.ValidationQueriesIntegrity">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.nodeRefInOtherFunction"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.varInitNodeType"/>
+    </group>
+  </extension>
+  <extension id="hu.metadom.hls.ssamodel.query.ValidationQueriesMisra101" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.metadom.hls.ssamodel.query.ValidationQueriesMisra101" id="hu.metadom.hls.ssamodel.query.ValidationQueriesMisra101">
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unaryPositiveInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unaryNegativeInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryAddSubtractInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryMultiplyDivideModuloInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryCompareInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unaryNegationInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryLogicalInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryShiftInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.binaryBitInappropriateTypes"/>
+      <query-specification fqn="hu.metadom.hls.ssamodel.query.unaryComplementInappropriateTypes"/>
+    </group>
+  </extension>
+</plugin>

@@ -1,0 +1,91 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+// ArgumentSimplifier transformation
+
+pattern argumentPair(param: SsaPassByRefParam, call: SsaCall, arg: SsaPassByRefArgument) {
+	SsaCall.arguments(call, arg);
+	SsaPassByRefArgument.param(arg, param);
+}
+
+pattern usedByUnaryAddress(node: SsaNode) {
+	SsaUnaryOperator.operatorKind(unary, ::ADDRESS);
+	SsaUnaryOperator.operand(unary, node);
+}
+
+pattern readonlyParameters(function: SsaFunction, param: SsaPassByRefParam) {
+	SsaFunction.parameters(function, param);
+	
+	SsaPassByRefParam.outNode(param, outputNode);
+	param == outputNode;
+	neg find usedByUnaryAddress(param);
+}
+
+pattern usedOutputParameter(param: SsaPassByRefParam) {
+	SsaPassByRefArgument.param(arg, param);
+	SsaPassByRefArgument.outNode(arg, argOutputNode);
+	find nodeUseNode(_, argOutputNode);
+}
+
+pattern notUsedOutputParameter(function: SsaFunction, param: SsaPassByRefParam) {
+	SsaFunction.parameters(function, param);
+	
+	neg find usedOutputParameter(param);
+}
+
+pattern writeonlyParameters(function: SsaFunction, param: SsaPassByRefParam) {
+	neg find nodeUseNode(_, param);
+	
+	SsaFunction.parameters(function, param);
+	SsaParam.direction(param, dir);
+	check(
+		switch (dir) {
+			case OUT:
+				false
+			default:
+				true
+		}
+	);
+}
+
+
+pattern noneDirectionArguments(call: SsaCall, arg: SsaArgument) {
+	SsaArgument.param(arg, param);
+	find noneDirectionParameters(_, param);
+	
+	SsaCall.arguments(call, arg);
+}
+
+pattern noneDirectionParameters(function: SsaFunction, param: SsaParam) {
+	SsaFunction.parameters(function, param);
+	SsaParam.direction(param, ::NONE);
+}
+
+
+pattern argumentOfUnusedParam(call: SsaCall, arg: SsaArgument) {
+	SsaCall.arguments(call, arg);
+	
+	SsaArgument.param(arg, param);
+	find unusedParam(_, param);
+}
+
+pattern unusedVar(function: SsaFunction, v: SsaVar, node: SsaNode) {
+	SsaFunction.nameScope.names.value(function, v);
+	SsaNode.^var(node, v);
+	1 == count find ssaNodeVar(_, v);
+	neg find nodeUseNode(_, node);
+}
+
+pattern unusedParam(function: SsaFunction, node: SsaNode) {
+	find unusedVar(function, _, node);
+	SsaParam.direction(node, ::IN);
+	
+} or {
+	find unusedVar(function, _, node);
+	SsaInit(node);
+}
+
+pattern unusedPhi(phi : SsaPhi) {
+	neg find nodeUseNode(_, phi);
+}

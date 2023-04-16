@@ -1,0 +1,125 @@
+package hu.metadom.hls.ssamodel.query
+
+
+import "http://hls.metadom.hu/ssaModel"
+import "http://hls.metadom.hu/ssaModelTrace"
+
+
+// HandleUnsusedNodes transformation
+
+pattern unusedNode(node: SsaNode) {
+	neg find nodeUseNode(_, node);
+	neg find ssaNodeVar(node, _);
+}
+
+
+// NameConverter transformation
+
+pattern typeNameWithSpace(type: Type) {
+	Type.name(type, name);
+	check (
+		name.contains(" ")
+	);
+}
+
+
+// PointerElim transformation
+
+pattern redundantAddressOperator(unary: SsaUnaryOperator, arrayRead: SsaArrayRead) {
+	SsaUnaryOperator.operand(unary,arrayRead);
+	neg find ssaNodeVar(arrayRead,_);
+	
+	SsaUnaryOperator.operatorKind(unary,::ADDRESS);
+}
+
+pattern arrayWriteCascade(write: SsaArrayWrite, subWrite: SsaArrayWrite) {
+	SsaArrayWrite.value(write, subWrite);
+	neg find ssaNodeVar(subWrite, _);
+}
+
+pattern arrayReadCascade(read: SsaArrayRead, subRead: SsaArrayRead) {
+	SsaArrayRead.array(read, subRead);
+	neg find ssaNodeVar(subRead, _);
+}
+
+
+// PointerToArray transformation
+
+pattern unnamedIndirectOrArrayWrite(node: SsaNode, prevNode: SsaNode) {
+	SsaIndirectWrite.pointer(node, prevNode);
+	neg find ssaNodeVar(node, _);
+} or {
+	SsaArrayWrite.array(node, prevNode);
+	neg find ssaNodeVar(node, _);
+}
+
+
+// PostIncDecReorder transformation
+
+/* 
+{ // -> block
+  assign int _0 = a_0 // -> assign, variable=a
+  ...
+  binaryOp int i_i = _0 SUBTRACT _1 // -> usageNode
+}
+*/
+pattern assignToNonameAndUsage(block: SsaBlock, assign: SsaAssign, usageNode: SsaNode, variable: SsaVar) {
+	find assignToNoname(assign);
+	
+	find varNodeUseNonameNode(usageNode, assign);
+	1 == count find varNodeUseNonameNode(_, assign);
+	
+	SsaBlock.nodes(block, assign);
+	SsaBlock.nodes(block, usageNode);
+	
+	SsaAssign.value.^var(assign, variable);
+}
+
+
+// RemoveUnusedPostIncDecAssigns transformation
+
+pattern unusedPostIncDecAssign(node: SsaAssign) {
+	neg find ssaNodeVar(node, _);
+	neg find nodeUseNode(_, node);
+	find originName(node, "postincdec");
+}
+
+
+// CExportTransform transformation
+
+pattern originPostIncDecNode(block: SsaBlock, node: SsaNode) {
+	SsaBlock.nodes(block, node);
+	neg find ssaNodeVar(node, _);
+	find originName(node, "postincdec");
+}
+
+pattern multipleConsumerNonameNode(block: SsaBlock, node: SsaNode) {
+	SsaBlock.nodes(block, node);
+	neg find ssaNodeVar(node, _);
+	neg SsaConst(node);
+	N == count find nodeUseNode(_, node);
+	check(N > 1);
+}
+
+pattern functionWithPassByRefParam(function: SsaFunction) {
+	SsaFunction.parameters(function, arg);
+	SsaPassByRefParam(arg);
+}
+
+pattern callWithPassByRefArgument(call: SsaCall) {
+	SsaCall.arguments(call, arg);
+	SsaPassByRefArgument(arg);
+}
+
+
+pattern loopPhi(phi: SsaPhi) {
+	SsaDowhile.merge(_,merge);
+	SsaBlock.nodes(merge,phi);
+}
+
+
+// SwitchNormalize transformation
+
+pattern cSsaSwitch(ssaSwitch: SsaSwitch) {
+	SsaSwitch.switchType(ssaSwitch, ::SWITCH);
+}

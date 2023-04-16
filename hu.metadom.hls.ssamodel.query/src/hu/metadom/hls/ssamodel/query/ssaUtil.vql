@@ -1,0 +1,228 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+pattern blockInBlock(parentBlock: SsaBlock, childBlock: SsaBlock) {
+	SsaBlock.nodes(parentBlock, childBlock);
+
+} or {
+	SsaBlock.nodes(parentBlock, ssaSwitch);
+	SsaSwitch.cases.node(ssaSwitch, childBlock);
+} or {
+	SsaBlock.nodes(parentBlock, ssaSwitch);
+	SsaSwitch.^default(ssaSwitch, childBlock);
+} or {
+	SsaBlock.nodes(parentBlock, ssaSwitch);
+	SsaSwitch.merge(ssaSwitch, childBlock);
+
+} or {
+	SsaBlock.nodes(parentBlock, ssaDowhile);
+	SsaDowhile.body(ssaDowhile, childBlock);
+} or {
+	SsaBlock.nodes(parentBlock, ssaDowhile);
+	SsaDowhile.cond(ssaDowhile, childBlock);
+} or {
+	SsaBlock.nodes(parentBlock, ssaDowhile);
+	SsaDowhile.merge(ssaDowhile, childBlock);
+}
+
+pattern reachableBlock(rootBlock: SsaBlock, block: SsaBlock) {
+	find blockInBlock+(rootBlock, block);
+} or {
+	rootBlock == block;
+}
+
+pattern nodeOrInnerNode(node: SsaNode, innerNode: SsaNode) {
+	node == innerNode;
+} or {
+	SsaInitList.inits(node, innerNode); // TODO nested case?
+}
+
+pattern functionNode(func: SsaFunction, node: SsaNode) {
+	find reachableBlock(func, childrenBlock);
+	SsaBlock.nodes(childrenBlock, blockNode);
+	find nodeOrInnerNode(blockNode, node);
+}
+
+pattern functionCallInFunction(func: SsaFunction, call: SsaCall, otherFunc: SsaFunction) {
+	find functionNode(func, call);
+	SsaCall.function(call, otherFunc);
+}
+
+pattern functionCallPair(func: SsaFunction, otherFunc: SsaFunction) {
+	find functionCallInFunction(func, _, otherFunc);
+}
+
+pattern innerInitList(initList: SsaInitList, innerInitList: SsaInitList) {
+	SsaInitList.inits(initList, innerInitList);
+}
+
+pattern allInitList(initList: SsaInitList, innerInitList: SsaInitList) {
+	initList == innerInitList;
+} or {
+	find innerInitList+(initList, innerInitList);
+}
+
+pattern nodeUseNode(node: SsaNode, usedNode: SsaNode) {
+	SsaCall.function(node, usedNode);
+} or {
+	SsaCall.arguments.node(node, usedNode);
+} or {
+	SsaReturn.expression(node, usedNode);
+} or {
+	SsaPhi.previous.node(node, usedNode);
+	
+} or {
+	SsaInit.value(node, usedNode);
+} or {
+	find allInitList(node, innerInitList);
+	SsaInitList.inits(innerInitList, initNode);
+	SsaInit.value(initNode, usedNode);
+} or {
+	SsaUnaryOperator.operand(node, usedNode);
+} or {
+	SsaBinaryOperator.left(node, usedNode);
+} or {
+	SsaBinaryOperator.right(node, usedNode);
+} or {
+	SsaAssign.value(node, usedNode);
+} or {
+	SsaCast.from(node, usedNode);
+
+} or {
+	SsaDowhile.condNode(node, usedNode);
+} or {
+	SsaSwitch.selector(node, usedNode);
+	
+} or {
+	SsaIndirectRead.pointer(node, usedNode);
+} or {
+	SsaArrayRead.indices.node(node, usedNode);
+} or {
+	SsaArrayRead.array(node, usedNode);
+} or {
+	SsaStructRead.struct(node, usedNode);
+	
+} or {
+	SsaIndirectWrite.pointer(node, usedNode);
+} or {
+	SsaIndirectWrite.value(node, usedNode);
+} or {
+	SsaArrayWrite.indices.node(node, usedNode);
+} or {
+	SsaArrayWrite.array(node, usedNode);
+} or {
+	SsaArrayWrite.value(node, usedNode);
+} or {
+	SsaStructWrite.struct(node, usedNode);
+} or {
+	SsaStructWrite.value(node, usedNode);
+
+} or {
+	SsaPassByRefParam.outNode(node, usedNode);
+}
+
+pattern nodeUseNodeIndirectly(node: SsaNode, usedNode: SsaNode) {
+	find nodeUseNode+(node, usedNode);
+}
+
+pattern produceNode(node: SsaNode) {
+	SsaCall(node);
+} or {
+	SsaPhi(node);
+	
+} or {
+	SsaInit(node);
+} or {
+	SsaUnaryOperator(node);
+} or {
+	SsaBinaryOperator(node);
+} or {
+	SsaAssign(node);
+} or {
+	SsaCast(node);
+
+} or {
+	SsaIndirectRead(node);
+} or {
+	SsaArrayRead(node);
+} or {
+	SsaStructRead(node);
+
+} or {
+	SsaIndirectWrite(node);
+} or {
+	SsaArrayWrite(node);
+} or {
+	SsaStructWrite(node);
+}
+
+pattern controlNode(node: SsaNode) {
+	SsaDowhile(node);
+} or {
+	SsaSwitch(node);
+} or {
+	SsaReturn(node);
+} or {
+	SsaControl(node);
+} or {
+	SsaFunction(node);
+} or {
+	SsaBlock(node);
+}
+
+pattern originName(node: SsaNode, originStr: java String) {
+	SsaNode.origin(node, originStr);
+}
+
+pattern simplePointerLeft(node: SsaNode) {
+	SsaIndirectWrite(node);
+} or {
+	SsaParam(node);
+} or {
+	SsaPhi(node);
+} or {
+	SsaAssign(node);
+}
+
+pattern simplePointerRight(node: SsaNode) {
+	SsaIndirectRead(node);
+} or {
+	SsaIndirectWrite(node);
+} or {
+	SsaCall(node);
+} or {
+	SsaPhi(node);
+} or {
+	SsaAssign(node);
+}
+
+pattern arrayPointerLeft(node: SsaNode) {
+	find simplePointerLeft(node);
+} or {
+	SsaArrayWrite(node);
+} or {
+	SsaBinaryOperator(node);
+}
+
+pattern arrayPointerRight(node: SsaNode) {
+	find simplePointerRight(node);
+} or {
+	SsaArrayRead(node);
+} or {
+	SsaArrayWrite(node);
+} or {
+	SsaBinaryOperator(node);
+}
+
+pattern varNodeUseNonameNode(varNode: SsaNode, nonameNode: SsaNode) {
+	find ssaNodeVar(varNode, _);
+	neg find ssaNodeVar(nonameNode, _);
+	
+	find nodeUseNode+(varNode, nonameNode);
+}
+
+pattern functionReturn(ret: SsaReturn) {
+	SsaFunction.nodes(_, ret);
+}
+

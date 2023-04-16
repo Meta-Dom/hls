@@ -1,0 +1,60 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+//Validation queries
+
+//Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {node},
+	severity = "error",
+	message = "The base types for the $node$ node should be the same."
+)
+pattern differentBaseTypesForNode(node: SsaNode){
+	find typesForNode(ref1, ref2, node);
+	neg find ssaReferenceNotPointerOrArray(t1);
+	neg find ssaReferenceNotPointerOrArray(t2);
+	t1 != t2;
+	find accessibleByRef(t1, ref1);
+	find accessibleByRef(t2, ref2);
+}
+
+//Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {node},
+	severity = "error",
+	message = "The types for the $node$ node should be the same."
+)
+pattern differentTypesForNode(node: SsaNode){
+	find typesForNode(t1, t2, node);
+	t1 != t2;
+}
+
+// Should run at the end of the generation
+// Misra C 10.4.
+@Constraint(
+	targetEditorId = "*",
+	key = {node},
+	severity = "error",
+	message = "The essential types for the $node$ node should be the same."
+)
+pattern differentEssentialTypesForNode(node: SsaNode){
+	find typesForArithmeticNode(ref1, ref2, node);
+	find accessibleByRef(t1, ref1);
+	find accessibleByRef(t2, ref2);
+	PrimitiveType(t1);
+	PrimitiveType(t2);
+	find essentialTypeCategories(t1, s1);
+	find essentialTypeCategories(t2, s2);
+	s1 != s2;
+} or {
+	find typesForArithmeticNode(ref1, ref2, node);
+	find accessibleByRef(t1, ref1);
+	find accessibleByRef(t2, ref2);
+	neg find ssaReferenceNotPointerOrArray(t1);
+	neg find ssaReferenceNotPointerOrArray(t2);
+	neg find bothPrimitive(t1, t2);
+	t1 != t2;
+}

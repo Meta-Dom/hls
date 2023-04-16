@@ -1,0 +1,51 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+pattern reachableFromDowhile(l: SsaDowhile, n: SsaNode){
+	SsaDowhile.body(l, c1);
+	SsaBlock(c1); 
+	find reachableNodesNoDowhile(c1, n);
+}
+
+pattern blockInBlockWithDoWhile(p: SsaBlock, c: SsaBlock){
+	SsaBlock.nodes(p, n);
+	SsaDowhile.body(n, c);
+} or {
+	find blockInBlockOnlySwitch(p, c);
+}
+
+pattern blockInBlockOnlySwitch(p: SsaBlock, c: SsaBlock){
+	SsaBlock.nodes(p, n);
+	SsaSwitch.cases.node(n, c);
+} or {
+	SsaBlock.nodes(p, n);
+	SsaSwitch.^default(n, c);
+} or {
+	SsaBlock.nodes(p, c);
+}
+
+pattern reachableNodesNoDowhile(p: SsaBlock, c: SsaNode){
+	find blockInBlockOnlySwitch+(p, b);
+	SsaBlock.nodes(b, c);
+}
+
+pattern reachableNodesNoDowhile2(p: SsaNode, c: SsaNode){
+	SsaBlock.nodes(p, c);
+} or {
+	SsaSwitch.cases.node(p, b);
+	find reachableNodesNoDowhile+(b, c);
+} or {
+	SsaSwitch.^default(p, b);
+	find reachableNodesNoDowhile+(b, c);
+} or {
+	SsaBlock.nodes(p, b);
+	find reachableNodesNoDowhile+(b, c);
+}
+
+pattern switchInnerBlock(ssaSwitch: SsaSwitch, block: SsaBlock) {
+	SsaSwitch.cases.node(ssaSwitch, block);
+} or {
+	SsaSwitch.^default(ssaSwitch, block);
+}
+

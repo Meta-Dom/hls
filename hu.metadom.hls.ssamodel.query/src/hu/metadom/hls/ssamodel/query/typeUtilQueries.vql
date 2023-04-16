@@ -1,0 +1,52 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+
+pattern ssaFunction(function: SsaFunction){
+	SsaFunction(function);
+}
+
+pattern ssaCall(node: SsaCall) {
+	SsaCall(node);
+}
+
+pattern ssaAssign(node: SsaAssign) {
+	SsaAssign(node);
+}
+
+pattern ssaIndirectRead(read: SsaIndirectRead) {
+	SsaIndirectRead(read);
+}
+
+pattern ssaIndirectWrite(write: SsaIndirectWrite) {
+	SsaIndirectWrite(write);
+}
+
+pattern filePosition(filePos: FilePosition) {
+	FilePosition(filePos);
+}
+
+pattern ssaInitValue(ssaInit: SsaInit, value: SsaNode) {
+	SsaInit.value(ssaInit, value);
+}
+
+pattern ssaNodeVar(node: SsaNode, v: SsaVar) {
+	SsaNode.^var(node, v);
+}
+
+pattern ssaCallFunction(call: SsaCall, function: SsaFunction) {
+	SsaCall.function(call, function);
+}
+
+pattern ssaArgumentNode(arg: SsaArgument, node: SsaNode) {
+	SsaArgument.node(arg, node);
+}
+
+pattern ssaArgumentParam(arg: SsaArgument, param: SsaParam) {
+	SsaArgument.param(arg, param);
+}
+
+pattern ssaPassByRefArgumentParam(arg: SsaPassByRefArgument, param: SsaPassByRefParam) {
+	SsaPassByRefArgument.param(arg, param);
+}

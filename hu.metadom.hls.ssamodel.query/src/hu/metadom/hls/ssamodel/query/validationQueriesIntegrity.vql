@@ -1,0 +1,33 @@
+
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "The given node is in an other function",
+	key = {node, usedNode})
+pattern nodeRefInOtherFunction(node: SsaNode, usedNode: SsaNode) {
+	find nodeUseNode(node, usedNode);
+	find functionNode(nodeFunction, node);
+	find functionNode(usedNodeFunction, usedNode);
+	nodeFunction != usedNodeFunction;
+}
+
+private pattern initOrInitListOrParam(node: SsaNode) {
+	SsaInit(node);
+} or {
+	SsaInitList(node);
+} or {
+	SsaParam(node);
+}
+
+@Constraint(targetEditorId = "hu.metadom.hls.ssamodel.presentation.PromodEditorID",
+	severity = "error",
+	message = "initNode of a variable is not SsaInit, SsaInitList or SsaParam",
+	key = {v, initNode})
+pattern varInitNodeType(v: SsaVar, initNode: SsaNode) {
+	SsaVar.initNode(v, initNode);
+	neg find initOrInitListOrParam(initNode);	
+}

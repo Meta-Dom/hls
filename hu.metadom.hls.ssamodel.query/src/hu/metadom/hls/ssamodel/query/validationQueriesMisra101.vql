@@ -1,0 +1,210 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+// This file contains the Validation constraints according to the MISRA C Standard's Rule 10.1
+// Rule 10.1 Operands shall not be of an inappropriate essential type
+// In some cases the operation is not signed, because the GCC compiler gives an error for that.
+
+// Misra C 10.1 Unary + (Positive) Operator
+//Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern unaryPositiveInappropriateTypes(op: SsaUnaryOperator){
+	SsaUnaryOperator.operatorKind(op, ::POSITIVE);
+	SsaUnaryOperator.operand.type(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolChar(t, 1);
+} or {
+	SsaUnaryOperator.operatorKind(op, ::POSITIVE);
+	SsaUnaryOperator.operand.type(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Unary - (Negative) Operator
+//Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern unaryNegativeInappropriateTypes(op: SsaUnaryOperator){
+	SsaUnaryOperator.operatorKind(op, ::NEGATIVE);
+	SsaUnaryOperator.operand.type(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolCharUnsigned(t, 1);
+} or {
+	SsaUnaryOperator.operatorKind(op, ::NEGATIVE);
+	SsaUnaryOperator.operand.type(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary + (Add) and Binary - (Subtract) Operators
+//Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryAddSubtractInappropriateTypes(op: SsaBinaryOperator){
+	find binaryAddSubtract(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBool(t, 1);
+} or {
+	find binaryAddSubtract(op);
+	find binaryOperand(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary * (Multiply), Binary / (Divide) and Binary % (Modulo) Operators
+// Since the GCC gives a compile time error when trying to use modulo and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryMultiplyDivideModuloInappropriateTypes(op: SsaBinaryOperator){
+	find binaryMultiplyDivideModulo(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolChar(t, 1);
+} or {
+	find binaryAddSubtract(op);
+	find binaryOperand(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary Comparing operators: < (less), > (greater), <= (less equal), >= (greater equal) Operators
+// Since the GCC gives a compile time error when trying to use modulo and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryCompareInappropriateTypes(op: SsaBinaryOperator){
+	find binaryCompare(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBool(t, 1);
+}
+
+// Misra C 10.1 Unary ! (Negation) Operator
+// Since the GCC gives a compile time error when trying to use modulo and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern unaryNegationInappropriateTypes(op: SsaUnaryOperator){
+	SsaUnaryOperator.operatorKind(op, ::NEGATION);
+	SsaUnaryOperator.operand.type(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidCharSignedUnsignedFloat(t, 1);
+} or {
+	SsaUnaryOperator.operatorKind(op, ::NEGATIVE);
+	SsaUnaryOperator.operand.type(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary logical operators: && (LOGIC_AND), || (LOGIC_OR) Operators
+// Since the GCC gives a compile time error when trying to use modulo and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryLogicalInappropriateTypes(op: SsaBinaryOperator){
+	find binaryLogical(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidCharSignedUnsignedFloat(t, 1);
+} or {
+	find binaryLogical(op);
+	find binaryOperand(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary shift operators: >> (LEFT_SHIFT), << (RIGHT_SHIFT) Operators
+// Since the GCC gives a compile time error when trying to use shift and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryShiftInappropriateTypes(op: SsaBinaryOperator){
+	find binaryShift(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolCharSigned(t, 1);
+} or {
+	find binaryShift(op);
+	find binaryOperand(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Binary bit operators: & (BIT_AND), | (BIT_OR), ^ (BIT_XOR) Operators
+// Since the GCC gives a compile time error when trying to use bit and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern binaryBitInappropriateTypes(op: SsaBinaryOperator){
+	find binaryShift(op);
+	find binaryOperand(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolCharSigned(t, 1);
+} or {
+	find binaryShift(op);
+	find binaryOperand(op, t);
+	Enum(t);
+}
+
+// Misra C 10.1 Unary ~ (Complement) Operator
+// Since the GCC gives a compile time error when trying to use Complement and float essential types together, it is not signed
+// Should run at the end of the generation
+@Constraint(
+	targetEditorId = "*",
+	key = {op},
+	severity = "error",
+	message = "The type is not appropriate for the operator."
+)
+pattern unaryComplementInappropriateTypes(op: SsaUnaryOperator){
+	SsaUnaryOperator.operatorKind(op, ::COMPLEMENT);
+	SsaUnaryOperator.operand.type(op, r);
+	find accessibleByRef(t, r);
+	PrimitiveType(t);
+	find essentialTypesVoidBoolCharSigned(t, 1);
+} or {
+	SsaUnaryOperator.operatorKind(op, ::COMPLEMENT);
+	SsaUnaryOperator.operand.type(op, t);
+	Enum(t);
+}

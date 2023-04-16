@@ -1,0 +1,138 @@
+package hu.metadom.hls.ssamodel.query
+
+
+import "http://hls.metadom.hu/ssaModel"
+import "http://hls.metadom.hu/ssaModelTrace"
+
+private pattern functionWithPointerParam(func: SsaFunction, param: SsaParam) {
+	SsaFunction.parameters(func, param);
+	SsaParam.type(param, paramType);
+	PointerType(paramType);
+}
+
+pattern pointerTraceToCreate(func: SsaFunction) {
+	find functionWithPointerParam(func, _);
+}
+
+pattern pointerTraceItemToCreate(trace: FunctionToDepointerParams, param: SsaParam) {
+	FunctionToDepointerParams.function(trace, func);
+	find functionWithPointerParam(func, param);
+}
+
+pattern functionToDepointerParams(trace: FunctionToDepointerParams) {
+	FunctionToDepointerParams(trace);
+}
+
+pattern assignToNoname(assign: SsaAssign) {
+	neg find ssaNodeVar(assign, _);
+}
+
+pattern assignFromNoname(assign: SsaAssign) {
+	SsaAssign.^var(assign, _);
+	SsaAssign.value(assign, value);
+	neg find ssaNodeVar(value, _);
+}
+
+
+
+private pattern paramCallPair(param: SsaParam, calledParam: SsaParam) {
+	SsaArgument.node(arg, param);
+	SsaArgument.param(arg, calledParam);
+}
+
+
+private pattern pointerParamInFunction(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	SsaFunction.parameters(function, param);
+	SsaParam.^var(param, v);
+	SsaVar.type(v, type);
+	PointerType(type);
+}
+
+
+private pattern equals(n1: SsaNode, n2: SsaNode) {
+	SsaAssign.value(n1, n2);
+} or {
+	SsaPhi.previous.node(n1, n2);
+}
+
+private pattern equals_p(n1: SsaNode, n2: SsaNode) {
+	find equals+(n1, n2);
+} or {
+	n1 == n2;
+}
+
+
+// simple array param
+private pattern notArrayPointerVar(v: SsaVar) {
+	SsaNode.^var(node, v);
+	neg find arrayPointerLeft(node);
+} or {
+	SsaNode.^var(node, v);
+	find nodeUseNode(useNode, node);
+	neg find arrayPointerRight(useNode);
+}
+
+private pattern arrayPointerParamInFunction(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find pointerParamInFunction(function, param, v);
+	neg find notArrayPointerVar(v);
+}
+
+private pattern notArrayPointerParamChain(p1: SsaParam) {
+	find paramCallPair+(p1, p2);
+	neg find arrayPointerParamInFunction(_, p2, _);
+}
+
+private pattern arrayPointerParam(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find arrayPointerParamInFunction(function, param, v);
+	neg find notArrayPointerParamChain(param);
+	neg find simplePointerParam(function, param, v);
+}
+
+
+private pattern modifiedArrayBase(param: SsaPassByRefParam) {
+	SsaPassByRefParam(param);
+	SsaParam.^var(param, v);
+	SsaNode.^var(node, v);
+	find equals_p(node, equalNode); // +
+	find arrayPointerLeft(equalNode);
+	neg find simplePointerLeft(equalNode);
+}
+
+
+pattern arrayPointerParamR(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find arrayPointerParam(function, param, v);
+	neg find modifiedArrayBase(param);
+}
+
+pattern arrayPointerParamWR(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find arrayPointerParam(function, param, v);
+	find modifiedArrayBase(param);
+}
+
+
+// simple pointer param
+private pattern notSimplePointerVar(v: SsaVar) {
+	SsaNode.^var(node, v);
+	find equals_p(node, equalNode); // +
+	neg find simplePointerLeft(equalNode);
+} or {
+	SsaNode.^var(node, v);
+	find equals_p(equalNode, node); // +
+	find nodeUseNode(useNode, equalNode);
+	neg find simplePointerRight(useNode);
+}
+
+private pattern simplePointerParamInFunction(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find pointerParamInFunction(function, param, v);
+	neg find notSimplePointerVar(v);
+}
+
+private pattern notSimplePointerParamChain(p1: SsaParam) {
+	find paramCallPair+(p1, p2);
+	neg find simplePointerParamInFunction(_, p2, _);
+}
+
+pattern simplePointerParam(function: SsaFunction, param: SsaParam, v: SsaVar) {
+	find simplePointerParamInFunction(function, param, v);
+	neg find notSimplePointerParamChain(param);
+}

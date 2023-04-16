@@ -1,0 +1,276 @@
+package hu.metadom.hls.ssamodel.query
+
+import "http://hls.metadom.hu/ssaModel"
+
+//Helper Queries For Validation
+
+// essential types according to Misra C 8.10.2.
+pattern essentialTypeCategories(pt: PrimitiveType, s: java String){
+	PrimitiveType.name(pt, name);
+	s == eval(
+		switch(name) {
+			case "void": "void"	
+			case "bool": "boolean"
+			case "char": "signed"
+			case "uchar": "unsigned"
+			case "short": "signed"
+			case "ushort": "unsigned"
+			case "int": "signed"
+			case "uint": "unsigned"
+			case "long": "signed"
+			case "ulong": "unsigned"
+			case "longlong": "signed"
+			case "ulonglong": "unsigned"
+			case "float": "floating"
+			case "double": "floating"
+			case "longdouble": "floating"
+		}
+	);
+}
+
+pattern essentialTypesWideness(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 0
+			case "bool": 1
+			case "char": 2
+			case "uchar": 2
+			case "short": 3
+			case "ushort": 3
+			case "int": 4
+			case "uint": 4
+			case "long": 5
+			case "ulong": 5
+			case "longlong": 6
+			case "ulonglong": 6
+			case "float": 7
+			case "double": 8
+			case "longdouble": 9
+		}
+	);
+}
+
+pattern essentialTypesVoidBool(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 1
+			case "bool": 1
+			case "char": 0
+			case "uchar": 0
+			case "short": 0
+			case "ushort": 0
+			case "int": 0
+			case "uint": 0
+			case "long": 0
+			case "ulong": 0
+			case "longlong": 0
+			case "ulonglong": 0
+			case "float": 0
+			case "double": 0
+			case "longdouble": 0
+		}
+	);
+}
+
+pattern essentialTypesVoidBoolChar(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 1
+			case "bool": 1
+			case "char": 1
+			case "uchar": 1
+			case "short": 0
+			case "ushort": 0
+			case "int": 0
+			case "uint": 0
+			case "long": 0
+			case "ulong": 0
+			case "longlong": 0
+			case "ulonglong": 0
+			case "float": 0
+			case "double": 0
+			case "longdouble": 0
+		}
+	);
+}
+
+pattern essentialTypesVoidBoolCharSigned(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 1
+			case "bool": 1
+			case "char": 1
+			case "uchar": 1
+			case "short": 1
+			case "ushort": 0
+			case "int": 1
+			case "uint": 0
+			case "long": 1
+			case "ulong": 0
+			case "longlong": 0
+			case "ulonglong": 0
+			case "float": 0
+			case "double": 0
+			case "longdouble": 0
+		}
+	);
+}
+
+pattern essentialTypesVoidBoolCharUnsigned(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 1
+			case "bool": 1
+			case "char": 1
+			case "uchar": 1
+			case "short": 0
+			case "ushort": 1
+			case "int": 0
+			case "uint": 1
+			case "long": 0
+			case "ulong": 1
+			case "longlong": 0
+			case "ulonglong": 1
+			case "float": 0
+			case "double": 0
+			case "longdouble": 0
+		}
+	);
+}
+
+pattern essentialTypesVoidCharSignedUnsignedFloat(pt: PrimitiveType, i: java Integer){
+	PrimitiveType.name(pt, name);
+	i == eval(
+		switch(name) {
+			case "void": 1
+			case "bool": 0
+			case "char": 1
+			case "uchar": 1
+			case "short": 1
+			case "ushort": 1
+			case "int": 1
+			case "uint": 1
+			case "long": 1
+			case "ulong": 1
+			case "longlong": 1
+			case "ulonglong": 1
+			case "float": 1
+			case "double": 1
+			case "longdouble": 1
+		}
+	);
+}
+
+pattern binaryOperand(op: SsaBinaryOperator, t: Type){
+	SsaBinaryOperator.right.type(op, t);
+} or {
+	SsaBinaryOperator.left.type(op, t);
+}
+
+pattern binaryAddSubtract(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::ADD);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::SUBTRACT);
+}
+
+pattern binaryMultiplyDivideModulo(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::MULTIPLY);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::DIVIDE);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::MODULO);
+}
+
+pattern binaryCompare(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::LESS);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::GREATER);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::LESS_EQUAL);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::GREATER_EQUAL);
+}
+
+pattern binaryLogical(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::LOGIC_AND);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::LOGIC_OR);
+}
+
+pattern binaryShift(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::LEFT_SHIFT);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::RIGHT_SHIFT);
+}
+
+pattern bothPrimitive(t1: Type, t2: Type){
+	PrimitiveType(t1);
+	PrimitiveType(t2);
+}
+
+pattern accessibleByRef(t: Type, ref: Type){
+	t == ref;
+} or {
+	ReferenceType(ref);
+	find refOfType+(t, ref);
+}
+
+pattern refOfType(t: Type, ref: ReferenceType){
+	neg ArrayType(ref);
+	neg PointerType(ref);
+	ReferenceType.referencedType(ref, t);
+}
+
+pattern typesForNode(t1: Type, t2: Type, op: SsaNode){
+	SsaBinaryOperator.right.type(op, t1);
+	SsaBinaryOperator.left.type(op, t2);
+} or {
+	SsaUnaryOperator.type(op, t1);
+	SsaUnaryOperator.operand.type(op, t2);
+} or {
+	SsaAssign.type(op, t1);
+	SsaAssign.value.type(op, t2);
+} or {
+	SsaPhi.type(op, t1);
+	SsaPhi.previous.node.type(op, t2);
+} or {
+	SsaInit.type(op, t1);
+	SsaInit.value.type(op, t2);
+}
+
+pattern binaryArithmetic(op: SsaBinaryOperator){
+	SsaBinaryOperator.operatorKind(op, ::MULTIPLY);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::DIVIDE);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::ADD);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::SUBTRACT);
+} or {
+	SsaBinaryOperator.operatorKind(op, ::DIVIDE);
+}
+
+pattern typesForArithmeticNode(r: Type, l: Type, op: SsaBinaryOperator){
+	find binaryArithmetic(op);
+	SsaBinaryOperator.right.type(op, r);
+	SsaBinaryOperator.left.type(op, l);
+}
+
+pattern typesForCompositeExpressions(t1: Type, t2: Type, op: SsaNode){
+	SsaBinaryOperator.right.type(op, t1);
+	SsaBinaryOperator.left.type(op, t2);
+} or {
+	SsaUnaryOperator.type(op, t1);
+	SsaUnaryOperator.operand.type(op, t2);
+}
+
+pattern ssaReferenceNotPointerOrArray(t: ReferenceType){
+	ReferenceType(t);
+	neg ArrayType(t);
+	neg PointerType(t);
+}
