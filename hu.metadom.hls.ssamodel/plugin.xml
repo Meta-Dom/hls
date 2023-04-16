@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated SsaModel -->
+      <package
+            uri="http://hls.metadom.hu/ssaModel"
+            class="hu.metadom.hls.ssamodel.SsaModelPackage"
+            genModel="model/SsaModel.xcore"/>
+   </extension>
+
+</plugin>

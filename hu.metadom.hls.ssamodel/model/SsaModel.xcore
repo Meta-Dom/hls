@@ -1,0 +1,374 @@
+@xcore.lang.Ecore(nsURI="http://hls.metadom.hu/ssaModel")
+@Import(ecore="http://www.eclipse.org/emf/2002/Ecore")
+@xcore.lang.GenModel(modelDirectory="/hu.metadom.hls.ssamodel/src-gen", 
+	editDirectory="/hu.metadom.hls.ssamodel.edit/src",
+	editorDirectory="/hu.metadom.hls.ssamodel.editor/src", modelName="SsaModel",
+	editPluginClass="hu.metadom.hls.ssamodel.provider.SsaModelEditPlugin",
+	editorPluginClass="hu.metadom.hls.ssamodel.presentation.SsaModelEditorPlugin", 
+	codeFormatting="true",
+	testsDirectory="/hu.metadom.hls.ssamodel.tests/src",
+	testSuiteClass="hu.metadom.hls.ssamodel.tests.SsaModelAllTests", 
+	importerID="org.eclipse.emf.importer.ecore",
+	containmentProxies="false", 
+	editorPluginID="hu.metadom.hls.ssamodel.editor",
+	testsPluginID="hu.metadom.hls.ssamodel.tests", prefix="SsaModel")
+package hu.metadom.hls.ssamodel
+
+annotation "http://www.eclipse.org/OCL/Import" as Import
+
+@xcore.lang.GenModel(image="true")
+abstract class Type extends SsaObject {
+	int size
+}
+
+class PrimitiveType extends Type {
+}
+
+class Enum extends Type {
+	contains EnumMember[] members
+}
+
+class Struct extends Type {
+	contains StructMember[] members
+}
+
+class Union extends Struct {
+}
+
+class ReferenceType extends Type {
+	refers Type[1] referencedType
+}
+
+class Container {
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains Container[] childContainers
+	String name
+	contains SsaFunction[] functions
+	ContainerType ^type = "CUSTOM"
+	contains SsaBlock globalBlock
+}
+
+class EnumMember extends Member {
+	contains SsaConst const
+	contains SsaNode valueNode
+}
+
+class StructMember extends Member {
+	refers Type[1] ^type
+}
+
+class StructBitfieldMember extends StructMember {
+	contains CompileTimeExpression bitfieldValue
+}
+
+class PointerType extends ReferenceType {
+}
+
+class ArrayType extends ReferenceType {
+	contains CompileTimeExpression length
+}
+
+@xcore.lang.GenModel(image="true")
+abstract class SsaNode extends SsaObject {
+	refers Type ^type
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	container SsaBlock parent opposite nodes
+	refers SsaVar ^var
+	int ssaIndex
+	String origin
+	int gid
+}
+
+class SsaAssign extends SsaNode {
+	refers SsaNode value
+}
+
+class SsaConst extends SsaNode {
+	String value
+}
+
+class SsaBinaryOperator extends SsaNode {
+	SsaBinaryOperatorKind operatorKind
+	refers SsaNode left
+	refers SsaNode right
+}
+
+class SsaUnaryOperator extends SsaNode {
+	SsaUnaryOperatorKind operatorKind
+	refers SsaNode operand
+}
+
+enum SsaBinaryOperatorKind {
+	MULTIPLY
+	DIVIDE = 1
+	MODULO = 2
+	ADD = 3
+	SUBTRACT = 4
+	LEFT_SHIFT = 5
+	RIGHT_SHIFT = 6
+	LESS = 7
+	GREATER = 8
+	LESS_EQUAL = 9
+	GREATER_EQUAL = 10
+	EQUAL = 11
+	NOT_EQUAL = 12
+	BIT_AND = 13
+	BIT_XOR = 14
+	BIT_OR = 15
+	LOGIC_AND = 16
+	LOGIC_OR = 17
+}
+
+enum SsaUnaryOperatorKind {
+	ADDRESS
+	INDIRECTION = 1
+	POSITIVE = 2
+	NEGATIVE = 3
+	COMPLEMENT = 4
+	NEGATION = 5
+}
+
+class SsaCall extends SsaNode {
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaArgument[] arguments
+	refers SsaNode function
+}
+
+class SsaPhi extends SsaNode {
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNodeRef[] previous
+}
+
+class SsaParam extends SsaNode {
+	ParamDirection direction = "NONE"
+}
+
+class SsaReturn extends SsaNode {
+	refers SsaNode expression
+}
+
+class SsaCast extends SsaNode {
+	refers SsaNode from
+}
+
+class SsaConditionalJump extends SsaNode {
+	refers SsaNode condition
+	refers SsaBlock thenBlock
+	refers SsaBlock elseBlock
+}
+
+class SsaFunction extends SsaBlock {
+	contains SsaParam[] parameters
+	refers Type returnType
+	boolean varArg
+}
+
+class SsaBlock extends SsaNode {
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNode[] nodes opposite parent
+	contains CNameScope nameScope
+}
+
+class SsaStructRead extends SsaNode {
+	refers SsaNode struct
+	refers StructMember field
+}
+
+class SsaStructWrite extends SsaNode {
+	refers SsaNode struct
+	refers SsaNode value
+	refers StructMember field
+}
+
+class SsaArrayRead extends SsaNode {
+	refers SsaNode array
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNodeRef[] indices
+}
+
+class SsaArrayWrite extends SsaNode {
+	refers SsaNode array
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNodeRef[] indices
+	refers SsaNode value
+}
+
+class FilePosition {
+	String name
+	int line
+	int startPositionInLine
+	int endPositionInLine
+	@xcore.lang.GenModel(documentation="The absolute start position in the file.")
+	int startPosition
+	@xcore.lang.GenModel(documentation="The absolute end position in the file.")
+	int endPosition
+}
+
+class SsaVar extends SsaObject {
+	refers Type ^type
+	refers SsaNode initNode
+	String origin
+}
+
+class CNameScope {
+	refers CNameScope parent
+	contains StringToCNameMap[] names
+	contains SsaVar[] vars
+	contains Type[] types
+	contains SsaConst[] constants
+}
+
+class StringToCNameMap wraps java.util.Map.Entry {
+	String key
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaVar value
+}
+
+class SsaExplicitCast extends SsaCast {
+	refers Type to
+}
+
+enum ContainerType {
+	DIRECTORY
+	FILE = 1
+	NAMESPACE = 2
+	CUSTOM = 3
+}
+
+@xcore.lang.GenModel(image="true")
+abstract class Member extends SsaObject {
+}
+
+class SsaDowhile extends SsaNode {
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNode body
+	@xcore.lang.GenModel(property="Editable", propertySortChoices="true")
+	contains SsaNode cond
+	contains SsaNode merge
+	LoopType loopType = "TOPTEST"
+	refers SsaNode condNode
+	DowhileType dowhileType = "WHILE"
+}
+
+class SsaSwitch extends SsaNode {
+	refers SsaNode selector
+	contains SsaCase[] cases
+	contains SsaNode merge
+	contains SsaNode ^default
+	SwitchType switchType = "SWITCH"
+}
+
+class SsaCase extends SsaObject {
+	contains SsaNode node
+	contains CompileTimeExpression[] values
+}
+
+enum LoopType {
+	TOPTEST
+	BOTTOMTEST = 1
+}
+
+class SsaControl extends SsaNode {
+	ControlType controlType
+}
+
+enum ControlType {
+	BREAK
+	CONTINUE = 1
+}
+
+@xcore.lang.GenModel(image="true")
+abstract class SsaAbstractInit extends SsaNode {
+}
+
+class SsaInitList extends SsaAbstractInit {
+	contains SsaAbstractInit[] inits
+}
+
+class SsaInit extends SsaAbstractInit {
+	refers SsaNode value
+}
+
+class FunctionType extends Type {
+	refers Type returnType
+	refers Type[] paramTypes
+}
+
+class SsaIndirectWrite extends SsaNode {
+	refers SsaNode pointer
+	refers SsaNode value
+}
+
+class SsaIndirectRead extends SsaNode {
+	refers SsaNode pointer
+}
+
+class SsaNodeRef {
+	refers SsaNode node
+	contains FilePosition fileposition
+}
+
+class SsaGoto extends SsaNode {
+	refers SsaLabel label
+}
+
+class SsaLabel extends SsaNode {
+}
+
+class SsaPassByRefArgument extends SsaArgument {
+	contains SsaOutputArgument outNode
+}
+
+class SsaArgument extends SsaNodeRef {
+	refers SsaParam param
+}
+
+class SsaPassByRefParam extends SsaParam {
+	refers SsaNode outNode
+}
+
+class SsaOutputArgument extends SsaNode {
+}
+
+enum ParamDirection {
+	IN
+	OUT = 1
+	INOUT = 2
+	NONE = 3
+}
+
+enum SwitchType {
+	IF
+	SWITCH = 1
+	CONDOP = 2
+	LOGICAND = 3
+	LOGICOR = 4
+}
+
+enum DowhileType {
+	WHILE
+	DOWHILE = 1
+	FOR = 2
+}
+
+abstract class SsaObject {
+	String name
+	String comment
+	contains FilePosition fileposition
+}
+
+class SsaSizeof extends SsaNode {
+}
+
+class SsaSizeofType extends SsaSizeof {
+	refers Type sizeofType
+}
+
+class SsaSizeofVar extends SsaSizeof {
+	contains SsaNode sizeofExpr
+}
+
+class CompileTimeExpression extends SsaObject {
+	BigInteger value
+	contains SsaNode node
+}
