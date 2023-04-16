@@ -1,0 +1,54 @@
+@Ecore(nsURI="http://hls.metadom.hu/ssaModelTrace")
+@GenModel(modelDirectory="/hu.metadom.hls.ssamodeltrace/src", 
+	//editDirectory="/hu.metadom.hls.ssamodeltrace.edit/src",
+	//editorDirectory="/hu.metadom.hls.ssamodeltrace.editor/src", 
+	modelName="SsaModelTrace",
+	editPluginClass="hu.metadom.hls.ssamodeltrace.provider.SsaModelTraceEditPlugin",
+	editorPluginClass="hu.metadom.hls.ssamodeltrace.presentation.SsaModelTraceEditorPlugin",
+	//testsDirectory="/hu.metadom.hls.ssamodeltrace.tests/src",
+	testSuiteClass="hu.metadom.hls.ssamodeltrace.tests.SsaModelTraceAllTests",
+	importerID="org.eclipse.emf.importer.ecore", 
+	containmentProxies="false",
+	editorPluginID="hu.metadom.hls.ssamodeltrace.editor", 
+	testsPluginID="hu.metadom.hls.ssamodeltrace.tests",
+	prefix="SsaModelTrace")
+package hu.metadom.hls.ssamodeltrace
+
+import hu.metadom.hls.ssamodel.Container
+import hu.metadom.hls.ssamodel.SsaCall
+import hu.metadom.hls.ssamodel.SsaFunction
+import hu.metadom.hls.ssamodel.SsaIndirectRead
+import hu.metadom.hls.ssamodel.SsaIndirectWrite
+import hu.metadom.hls.ssamodel.SsaParam
+import hu.metadom.hls.ssamodel.SsaVar
+
+class FunctionToLocalizeVariables {
+	refers SsaFunction function
+	refers SsaVar[] vars
+	@GenModel(property="Editable", propertySortChoices="true")
+	contains FunctionCall[] funcCalls
+}
+
+class Trace {
+	contains FunctionToLocalizeVariables[] functions
+	refers Container ^container
+	contains FunctionToDepointerParams[] pointers
+}
+
+class FunctionCall {
+	refers SsaCall ssaCall
+	refers FunctionToLocalizeVariables functionTrace
+}
+
+class FunctionToDepointerParams {
+	refers SsaFunction function
+	contains PointerParameter[] pointerParameter
+}
+
+class PointerParameter {
+	refers SsaParam pointerParam
+	refers SsaIndirectRead[] indirectReadList
+	refers SsaIndirectWrite[] indirectWriteList
+	boolean isInput
+	boolean isOutput = "false"
+}
